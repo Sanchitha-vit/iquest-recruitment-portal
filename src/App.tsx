@@ -10,6 +10,7 @@ import DomainSelection from './pages/DomainSelection';
 import Questionnaire from './pages/Questionnaire';
 import AdminPanel from './pages/AdminPanel';
 import MatrixBackground from './components/MatrixBackground';
+import Camera from './components/Camera';
 
 function App() {
   return (
@@ -47,7 +48,10 @@ function App() {
                 path="/questionnaire/:domain"
                 element={
                   <PrivateRoute>
-                    <Questionnaire />
+                    <>
+                      <Camera />
+                      <Questionnaire />
+                    </>
                   </PrivateRoute>
                 }
               />
