@@ -1,0 +1,33 @@
+import { useRef, useEffect, useState } from "react";
+
+export default function Camera() {
+  const videoRef = useRef(null);
+  const [stream, setStream] = useState(null);
+
+  useEffect(() => {
+    const startCamera = async () => {
+      try {
+        const userStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoRef.current.srcObject = userStream;
+        setStream(userStream);
+      } catch (error) {
+        console.error("Error accessing camera:", error);
+      }
+    };
+
+    startCamera();
+
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop()); // Stop the camera when unmounting
+      }
+    };
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center">
+      <h2 className="text-white mb-2">Camera Access</h2>
+      <video ref={videoRef} autoPlay className="border border-green-500 w-64 h-48"></video>
+    </div>
+  );
+}
